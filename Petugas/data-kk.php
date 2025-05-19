@@ -1,8 +1,6 @@
-<?php
-include "header.php";
-include "../service/modal.php";
-include "../service/crud-query.php";
-?>
+<?php include "header.php" ?>
+<?php include "../service/modal.php" ?>
+<?php include "../service/crud-query.php" ?>
 
 <div class="main-panel">
   <div class="content-wrapper">

@@ -64,78 +64,98 @@ include "header.php"
       </div>
     </div>
     <!-- end card jumlah Kartu Keluarga -->
-      
+
     <!-- penjelasan alur tambah data penduduk -->
     <!-- No 1 -->
-     <div class="row">
+    <div class="row">
       <div class="col-lg-3 col-md-6 grid-margin stretch-card">
         <div class="card card-rounded card-bg-1">
           <div class="card-body">
-            <h4 class="card-title card-title-dash">Alur INSERT DATA</h4>
+            <h4 class="card-title card-title-dash"><?php echo strtoupper("mencatat data penduduk / kelahiran") ?></h4>
             <div class="d-flex align-items-center justify-content-between mb-2">
             </div>
-            <p class="text-muted mb-0">Silahkan Masukkan data kartu keluarga Terlebih dahulu</p>
+            <p class="text-muted mb-0"><?php echo ucwords("siklus penduduk -> kelola kelahiran -> tambah data lahir") ?></p>
           </div>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 grid-margin stretch-card">
         <div class="card card-rounded card-bg-1">
           <div class="card-body">
-            <h4 class="card-title card-title-dash"> </h4>
+            <h4 class="card-title card-title-dash"><?php echo strtoupper("update data penduduk") ?></h4>
             <div class="d-flex align-items-center justify-content-between mb-2">
             </div>
-            <p class="text-muted mb-0">Lalu Masukkan data kelahiran sebelum data penduduk</p>
+            <p class="text-muted mb-0"><?php echo ucwords("penduduk -> kelola data -> data penduduk") ?></p>
           </div>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 grid-margin stretch-card">
         <div class="card card-rounded card-bg-1">
           <div class="card-body">
-            <h4 class="card-title card-title-dash"> </h4>
+            <h4 class="card-title card-title-dash"><?php echo strtoupper("menambahkan kartu keluarga") ?></h4>
             <div class="d-flex align-items-center justify-content-between mb-2">
             </div>
-            <p class="text-muted mb-0">Data anggota keluarga akan terupdate setelah insert data penduduk</p>
+            <p class="text-muted mb-0"><?php echo ucwords("kartu keluarga -> kelola data -> tambah kartu keluarga ") ?></p>
           </div>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 grid-margin stretch-card">
         <div class="card card-rounded card-bg-1">
           <div class="card-body">
-            <h4 class="card-title card-title-dash"> </h4>
+            <h4 class="card-title card-title-dash"><?php echo strtoupper("membuat kartu keluarga") ?> </h4>
             <div class="d-flex align-items-center justify-content-between mb-2">
             </div>
-            <p class="text-muted mb-0">Dan terakhir silahkan masukkan data penduduk</p>
+            <p class="text-muted mb-0"><?php echo ucwords("kartu keluarga -> kelola data -> lihat anggota -> buat kartu keluarga") ?></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 grid-margin stretch-card">
+        <div class="card card-rounded card-bg-1">
+          <div class="card-body">
+            <h4 class="card-title card-title-dash"><?php echo strtoupper("mencatat data kematian") ?> </h4>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+            </div>
+            <p class="text-muted mb-0"><?php echo ucwords("siklus penduduk -> kelola kematian -> catat kematian") ?></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 grid-margin stretch-card">
+        <div class="card card-rounded card-bg-1">
+          <div class="card-body">
+            <h4 class="card-title card-title-dash"><?php echo strtoupper("mencatat anggota keluarga baru") ?> </h4>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+            </div>
+            <p class="text-muted mb-0"><?php echo ucwords("kartu keluarga -> kelola data -> lihat anggota -> tambah anggota") ?></p>
           </div>
         </div>
       </div>
     </div>
 
-  <div class="row">
-    <div class="col-lg-12 col-md-12 grid-margin stretch-card">
-      <div class="card card-rounded table-dark-bg">
-        <div class="card-body">
-          <h4 class="card-title card-title-dash">Data Kartu Keluarga</h4>
-          <div class="table-responsive table-dark">
-            <table class="table table-borderless table-dark mb-0" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Nama Kepala Keluarga</th>
-                  <th>Alamat</th>
-                  <th>Jumlah Anggota</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Data Kartu Keluarga akan ditampilkan di sini -->
-              </tbody>
-            </table>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 grid-margin stretch-card">
+        <div class="card card-rounded table-dark-bg">
+          <div class="card-body">
+            <h4 class="card-title card-title-dash">Data Kartu Keluarga</h4>
+            <div class="table-responsive table-dark">
+              <table class="table table-borderless table-dark mb-0" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Kepala Keluarga</th>
+                    <th>Alamat</th>
+                    <th>Jumlah Anggota</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Data Kartu Keluarga akan ditampilkan di sini -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 <!-- end card jumlah Kartu Keluarga -->
 

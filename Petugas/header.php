@@ -26,7 +26,10 @@ if (isset($_SESSION['id_petugas'])) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Star Admin2 </title>
+
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
   <link rel="stylesheet" href="../templates/vendors/feather/feather.css">
   <link rel="stylesheet" href="../templates/vendors/mdi/css/materialdesignicons.min.css">
@@ -43,6 +46,24 @@ if (isset($_SESSION['id_petugas'])) {
 
   <link rel="shortcut icon" href="../templates/images/favicon.png" />
 
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css">
+
+  <style>
+
+.dt-custom-search-end {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 15px;
+}
+
+.dt-custom-search-end input {
+  width: 250px;
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+</style>
 </head>
 
 <body>
@@ -120,7 +141,6 @@ if (isset($_SESSION['id_petugas'])) {
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="data-penduduk.php">Data Penduduk </a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#">Tambah Penduduk</a></li>
               </ul>
             </div>
           </li>
@@ -138,10 +158,10 @@ if (isset($_SESSION['id_petugas'])) {
                   <a class="nav-link" href="data-kk.php">Data Kartu Keluarga</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Tambah kartu keluarga</a>
+                  <a class="nav-link" href="create-kk.php">Buat kartu keluarga Baru</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Tambah Anggota keluarga</a>
+                  <a class="nav-link" href="anggota.php">Tambah Anggota keluarga</a>
                 </li>
               </ul>
             </div>
@@ -159,7 +179,7 @@ if (isset($_SESSION['id_petugas'])) {
                   <a class="nav-link" href="kelahiran.php">Data Kelahiran</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Tambah Data Lahir</a>
+                  <a class="nav-link" href="kelahiran-add.php">Tambah Data Lahir</a>
                 </li>
               </ul>
             </div>
@@ -176,7 +196,7 @@ if (isset($_SESSION['id_petugas'])) {
                   <a class="nav-link" href="kematian.php">Data Kematian</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Catat Kematian</a>
+                  <a class="nav-link" href="kematian-add.php">Catat Kematian</a>
                 </li>
               </ul>
             </div>
@@ -189,7 +209,6 @@ if (isset($_SESSION['id_petugas'])) {
           </li>
         </ul>
       </nav>
-
 
        <!-- log out modal -->
         <!-- <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" style="display: none; padding-right: 17px;" role="dialog" aria-hidden="true">

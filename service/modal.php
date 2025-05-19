@@ -1,3 +1,6 @@
+<?php include 'config.php' ?>
+<?php include 'crud-query.php' ?>
+
 <!-- modal penduduk -->
 <?php
 //modal update data penduduk
@@ -6,6 +9,8 @@ foreach ($dataPenduduk as $baris2) {
     $nama_lengkap = $baris2['nama_lengkap'];
     $tempat_lahir = $baris2['tempat_lahir'];
     $tanggal_lahir = $baris2['tanggal_lahir'];
+    $rt = $baris2['rt'];
+    $rw = $baris2['rw'];
 ?>
     <div class="modal fade" id="updateModal<?= $nik ?>" tabindex="-1" aria-labelledby="exampleModalLabel<?= $nik ?>" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -28,6 +33,14 @@ foreach ($dataPenduduk as $baris2) {
                         <div class="form-group">
                             <label for="tanggal_lahir">Tanggal Lahir</label>
                             <input type="date" name="tanggal_lahir" class="form-control" value="<?= $tanggal_lahir ?>" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="rt">RT</label>
+                            <input type="text" name="rt" class="form-control" value="<?= $rt ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rw">RW</label>
+                            <input type="text" name="rw" class="form-control" value="<?= $rw ?>" required>
                         </div>
                         <div class="form-group">
                             <label>Jenis Kelamin</label><br>
@@ -85,7 +98,7 @@ foreach ($dataPenduduk as $baris2) {
                             <input type="date" name="tanggal_input" class="form-control" value="<?= $baris2['tanggal_input']; ?>" required>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group m-3">
                         <!-- update button -->
                         <button type="submit" name="update" class="btn btn-primary">Update</button>
                         <!-- cancel button -->
@@ -98,7 +111,7 @@ foreach ($dataPenduduk as $baris2) {
 <?php } ?>
 
 <?php
-// Loop untuk delete modal
+// penduduk delete modal
 foreach ($deletePenduduk as $row) {
     $nik = $row['nik'];
 ?>
@@ -123,13 +136,13 @@ foreach ($deletePenduduk as $row) {
     </div>
 <?php } ?>
 
-<!-- modal keluarga -->
+<!-- Modal keluarga -->
 <!-- Modal Tambah KK -->
 <div class="modal fade" id="tambahKKModal" tabindex="-1" aria-labelledby="tambahKKModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form method="POST" action="data-kk.php" enctype="multipart/form-data" class="forms-sample">
+            <form method="POST" action="../Petugas/data-kk.php" enctype="multipart/form-data" class="forms-sample">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tambahKKModalLabel">Tambah Kartu
                         Keluarga</h5>
@@ -154,15 +167,22 @@ foreach ($deletePenduduk as $row) {
                         <textarea class="form-control" name="alamat" required></textarea>
                     </div>
                     <div class="form-group">
+                        <label for="rt">RT</label>
+                        <input class="form-control" name="rt" required></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="rw">RW</label>
+                        <input class="form-control" name="rw" required></input>
+                    </div>
+                    <div class="form-group">
                         <label for="tanggal_input">Tanggal Input</label>
                         <input type="date" class="form-control" name="tanggal_input" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="tambah" id="btnTambahKK"
+                    <button type="submit" id="tambahkk" value="tambahkk" name="tambahkk"
                         class="btn btn-primary">Simpan</button>
-                    <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Batal</button>
+                    <a href="../Petugas/data-kk.php" class="btn btn-danger">Batal</a>
                 </div>
             </form>
         </div>
@@ -209,6 +229,16 @@ foreach ($keluargaupdate as $row): ?>
                                 required><?php echo $row['alamat']; ?></textarea>
                         </div>
                         <div class="form-group">
+                            <label for="rt">RT</label>
+                            <input class="form-control" name="rt"
+                                required><?php echo $row['rt']; ?></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="rw">RW</label>
+                            <input class="form-control" name="rw"
+                                required><?php echo $row['rw']; ?></input>
+                        </div>
+                        <div class="form-group">
                             <label for="tanggal_input">Tanggal Input</label>
                             <input type="date" class="form-control" name="tanggal_input"
                                 value="<?php echo $row['tanggal_input']; ?>" required>
@@ -216,8 +246,7 @@ foreach ($keluargaupdate as $row): ?>
                         <div class="modal-footer">
                             <button type="submit" name="update_kk"
                                 class="btn btn-primary">Simpan</button>
-                            <button type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">Batal</button>
+                            <a href="../Petugas/data-kk.php" class="btn btn-danger">Batal</a>
                         </div>
                     </form>
                 </div>
@@ -249,8 +278,7 @@ foreach ($keluargadelete as $row): ?>
                             value="<?php echo $row['id_keluarga']; ?>">
                         <button type="submit" name="delete_kk" class="btn btn-danger">Hapus</button>
                     </form>
-                    <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Batal</button>
+                    <a href="../Petugas/data-kk.php" class="btn btn-danger">Batal</a>
                 </div>
             </div>
         </div>
@@ -276,8 +304,10 @@ foreach ($anggota_data as $id_keluarga => $anggota_list):
                         Anggota Keluarga</h5>
                     <!-- button tambah data anggota keluarga -->
                     <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal"
-                        data-bs-target="#tambahAnggotaModal<?php echo $id_keluarga; ?>">Tambah
-                        Anggota</button>
+                        data-bs-target="#tambahAnggotaModal<?php echo $id_keluarga; ?>"><?php echo ucwords("buat kartu keluarga baru"); ?></button>
+                    <a href="../Petugas/anggota.php?id_keluarga=<?php echo $id_keluarga; ?>" class="btn btn-success m-3">
+                        <?php echo ucwords("tambah anggota keluarga"); ?>
+                    </a>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -312,7 +342,7 @@ foreach ($anggota_data as $id_keluarga => $anggota_list):
 <?php endforeach; ?>
 
 <!-- modal tambah anggota keluarga -->
-<div class="modal fade" id="tambahAnggotaModal<?php echo $id_keluarga; ?>" tabindex="-1"
+<!-- <div class="modal fade" id="tambahAnggotaModal<?php echo $id_keluarga; ?>" tabindex="-1"
     aria-labelledby="tambahAnggotaModalLabel<?php echo $id_keluarga; ?>" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -360,4 +390,4 @@ foreach ($anggota_data as $id_keluarga => $anggota_list):
             </form>
         </div>
     </div>
-</div>
+</div> -->

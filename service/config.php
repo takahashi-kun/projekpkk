@@ -20,6 +20,8 @@ $dataPenduduk = $conn->query("
         tanggal_lahir,
         jenis_kelamin,
         alamat,
+        rt,
+        rw,
         agama,
         status_perkawinan,
         status_hidup,
@@ -80,6 +82,13 @@ $querylahir = $conn->query("
         tb_lahir 
 ");
 
+// query hubungan keluarga 
+$queryhubungan = $conn->query("
+    SELECT 
+        hubungan 
+    FROM 
+        tanggotakeluarga
+");
 
 //table kematian
 $querymati = $conn->query("

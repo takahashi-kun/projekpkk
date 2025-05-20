@@ -155,7 +155,7 @@ if (isset($_POST['tambahkk'])) {
     $cek_nik_result = mysqli_query($conn, $cek_nik_query);
 
     if ($cek_nik_result && mysqli_num_rows($cek_nik_result) > 0) {
-        // NIK ditemukan di tabel kelahiran, lanjutkan insert
+        // NIK ditemukan di tabel kelahiran, lanjutkan insert ke tkeluarga
         $sql = "INSERT INTO tkeluarga (no_kartu_keluarga, nik, nama_kepala_kk, alamat,rt,rw, tanggal_input) 
                 VALUES ('$no_kartu_keluarga', '$nik', '$nama_kepala_kk', '$alamat','$rt','$rw', '$tanggal_input')";
         $kk = mysqli_query($conn, $sql);
@@ -218,30 +218,50 @@ if (isset($_POST['delete_kk'])) {
     }
 }
 
-//logikan anggota keluarga
+// logikan anggota keluarga
 // insert anggota keluarga
 if (isset($_POST['submitanggota'])) {
     $id_keluarga = $_POST['id_keluarga'];
     $nik = $_POST['nik'];
-    $nama = $_POST['nama']; // Optional jika ingin dipakai
+    $nama = $_POST['nama']; // opsional
     $hubungan = $_POST['hubungan'];
 
-    // Cek apakah NIK ada di tabel kelahiran
+    //Cek apakah id_keluarga valid dan nomor KK ada
+    $cek_kk_result = mysqli_query($conn, "SELECT no_kartu_keluarga FROM tkeluarga WHERE id_keluarga = '$id_keluarga'");
+    if (mysqli_num_rows($cek_kk_result) == 0) {
+        echo "<script>alert('Nomor Kartu Tidak Ditemukan.'); window.location.href='anggota.php';</script>";
+        exit;
+    }
+
+    //Cek apakah NIK ada di tabel kelahiran
     $cek = mysqli_query($conn, "SELECT * FROM tb_lahir WHERE nik = '$nik'");
     if (mysqli_num_rows($cek) > 0) {
-        // Insert ke tanggotakeluarga
+
+        //Cek apakah NIK sudah pernah dimasukkan ke tanggotakeluarga
+        $cek_anggota = mysqli_query($conn, "SELECT * FROM tanggotakeluarga WHERE nik = '$nik'");
+        if (mysqli_num_rows($cek_anggota) > 0) {
+            echo "<script>alert('NIK ini sudah terdaftar sebagai anggota keluarga lain.');</script>";
+            exit;
+        }
+
+        //Insert data
         $insert = mysqli_query($conn, "INSERT INTO tanggotakeluarga (id_keluarga, nik, hubungan)
-        VALUES ('$id_keluarga', '$nik', '$hubungan')");
+            VALUES ('$id_keluarga', '$nik', '$hubungan')");
+
+        // Update id_keluarga di tb_lahir
+        $query_update_lahir = "UPDATE tb_lahir SET id_keluarga = '$id_keluarga' WHERE nik = '$nik'";
+        mysqli_query($conn, $query_update_lahir);
 
         if ($insert) {
-            echo "<script>alert('Data anggota berhasil disimpan!'); location.href='data-kk.php';</script>";
+            echo "<script>alert('Data anggota berhasil disimpan!'); location.href='anggota.php?id_keluarga=$id_keluarga';</script>";
         } else {
             echo "<script>alert('Gagal menyimpan data.');</script>";
         }
     } else {
-        echo "<script>alert('NIK tidak ditemukan!');</script>";
+        echo "<script>alert('NIK tidak ditemukan dalam data kelahiran.');</script>";
     }
 }
+
 
 // update anggota keluarga
 if (isset($_POST['update_anggota'])) {
@@ -267,6 +287,61 @@ if (isset($_POST['delete_anggota'])) {
         echo '<div class="alert alert-success"><strong>Sukses!</strong> Anggota keluarga berhasil dihapus.</div>';
     } else {
         echo '<div class="alert alert-danger"><strong>Gagal!</strong> Gagal menghapus anggota keluarga.</div>';
+    }
+}
+
+//logika tambah kartu keluarga baru
+if (isset($_POST['tambah_kk_baru'])) {
+    $id_keluarga_lama = $_POST['id_keluarga'];
+    $no_kartu_keluarga_baru = $_POST['no_kartu_keluarga'];
+    $nik = $_POST['nik']; // NIK yang akan dijadikan kepala keluarga
+    $nama_kepala_kk = $_POST['nama_kepala_kk'];
+    $alamat = $_POST['alamat'];
+    $rt = $_POST['rt'];
+    $rw = $_POST['rw'];
+    $tanggal_input = $_POST['tanggal_input'];
+
+    // Cek apakah no KK sudah ada
+    $cek_nokk = mysqli_query($conn, "SELECT * FROM tkeluarga WHERE no_kartu_keluarga = '$no_kartu_keluarga'");
+    if (mysqli_num_rows($cek_nokk) > 0) {
+        echo "<script>alert('Nomor KK sudah terdaftar. Gunakan nomor lain.'); window.location.href='data-kk.php';</script>";
+        exit;
+    }
+
+    // Validasi dasar
+    if (empty($nik) || empty($no_kartu_keluarga_baru)) {
+        echo "<script>alert('Data tidak lengkap.'); window.location.href='data-kk.php';</script>";
+        exit;
+    }
+
+    // Cek apakah NIK memang ada di KK lama
+    $cek_nik_lama = mysqli_query($conn, "SELECT * FROM tanggotakeluarga WHERE nik = '$nik' AND id_keluarga = '$id_keluarga_lama'");
+    if (mysqli_num_rows($cek_nik_lama) == 0) {
+        echo "<script>alert('NIK tidak ditemukan di KK lama.'); window.location.href='data-kk.php';</script>";
+        exit;
+    }
+
+    // Insert ke tkeluarga (KK baru)
+    $query_kk = mysqli_query($conn, "INSERT INTO tkeluarga (no_kartu_keluarga, nik, nama_kepala_kk, alamat, rt, rw, tanggal_input) 
+                VALUES ('$no_kartu_keluarga_baru', '$nik', '$nama_kepala_kk', '$alamat', '$rt', '$rw', '$tanggal_input')");
+
+    // Ambil id_keluarga baru
+    $id_keluarga_baru = mysqli_insert_id($conn);
+
+    if ($query_kk && $id_keluarga_baru) {
+        // Hapus dari tanggotakeluarga lama
+        mysqli_query($conn, "DELETE FROM tanggotakeluarga WHERE nik = '$nik' AND id_keluarga = '$id_keluarga_lama'");
+
+        // Tambahkan ke tanggotakeluarga baru dengan status kepala keluarga
+        mysqli_query($conn, "INSERT INTO tanggotakeluarga (id_keluarga, nik, hubungan) VALUES ('$id_keluarga_baru', '$nik', 'Kepala Keluarga')");
+
+        // Update id_keluarga di tb_lahir
+        $query_update_lahir = "UPDATE tb_lahir SET id_keluarga = '$id_keluarga' WHERE nik = '$nik'";
+        mysqli_query($conn, $query_update_lahir);
+
+        echo "<script>alert('Kartu Keluarga baru berhasil dibuat dan anggota berhasil dipindah.'); window.location.href='data-kk.php';</script>";
+    } else {
+        echo "<script>alert('Gagal membuat KK baru.');</script>";
     }
 }
 
@@ -299,7 +374,7 @@ if (isset($_POST['submitkelahiran'])) {
         (nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, agama, status_perkawinan, pekerjaan, no_hp, tanggal_input, rt, rw) 
         VALUES 
         ('$nik', '$nama', '$tempat_lahir', '$tanggal_lahir', '$jenis_kelamin', '$agama', 'Belum Kawin', '$pekerjaan', '$no_hp', '$tanggal_pencatatan', '$rt', '$rw')";
-        $hasil_penduduk = mysqli_query($conn, $query_penduduk);
+    $hasil_penduduk = mysqli_query($conn, $query_penduduk);
 
     // Insert ke tb_lahir
     $query_lahir = "

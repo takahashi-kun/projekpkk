@@ -224,19 +224,19 @@ foreach ($keluargaupdate as $row): ?>
                                 value="<?php echo $row['nama_kepala_kk']; ?>">
                         </div>
                         <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <textarea class="form-control" name="alamat"
-                                required><?php echo $row['alamat']; ?></textarea>
-                        </div>
-                        <div class="form-group">
                             <label for="rt">RT</label>
-                            <input class="form-control" name="rt"
-                                required><?php echo $row['rt']; ?></input>
+                            <input type="text" class="form-control" name="rt"
+                                value="<?php echo $row['rt']; ?>">
                         </div>
                         <div class="form-group">
                             <label for="rw">RW</label>
-                            <input class="form-control" name="rw"
-                                required><?php echo $row['rw']; ?></input>
+                            <input type="text" class="form-control" name="rw"
+                                value="<?php echo $row['rw']; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <textarea class="form-control" name="alamat"
+                                required><?php echo $row['alamat']; ?></textarea>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_input">Tanggal Input</label>
@@ -303,8 +303,9 @@ foreach ($anggota_data as $id_keluarga => $anggota_list):
                     <h5 class="modal-title" id="lihatAnggotaModalLabel<?php echo $id_keluarga; ?>">
                         Anggota Keluarga</h5>
                     <!-- button tambah data anggota keluarga -->
-                    <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal"
-                        data-bs-target="#tambahAnggotaModal<?php echo $id_keluarga; ?>"><?php echo ucwords("buat kartu keluarga baru"); ?></button>
+                    <a href="../Petugas/create-kk.php?id_keluarga=<?php echo $id_keluarga; ?>" class="btn btn-primary m-3">
+                        <?php echo ucwords("buat kartu keluarga baru"); ?>
+                    </a>
                     <a href="../Petugas/anggota.php?id_keluarga=<?php echo $id_keluarga; ?>" class="btn btn-success m-3">
                         <?php echo ucwords("tambah anggota keluarga"); ?>
                     </a>
@@ -340,54 +341,3 @@ foreach ($anggota_data as $id_keluarga => $anggota_list):
         </div>
     </div>
 <?php endforeach; ?>
-
-<!-- modal tambah anggota keluarga -->
-<!-- <div class="modal fade" id="tambahAnggotaModal<?php echo $id_keluarga; ?>" tabindex="-1"
-    aria-labelledby="tambahAnggotaModalLabel<?php echo $id_keluarga; ?>" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form method="POST" action="data-kk.php" enctype="multipart/form-data"
-                class="forms-sample">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tambahAnggotaModalLabel<?php echo $id_keluarga; ?>">
-                        Tambah Anggota Keluarga</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="id_keluarga" value="<?php echo $id_keluarga; ?>">
-                    <div class="form-group">
-                        <label for="no_kartu_keluarga">No Kartu Keluarga</label>
-                        <input type="text" class="form-control" name="no_kartu_keluarga"
-                            value="<?php echo $row['no_kartu_keluarga']; ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="nik">NIK Anggota</label>
-                        <input type="text" class="form-control" name="nik" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nik">nama</label>
-                        <input type="text" class="form-control" name="nik" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="hubungan">Hubungan</label>
-                        <select class="form-control" name="hubungan" required>
-                            <option value="" selected disabled>-- Pilih Hubungan --</option>
-                            <option value="Kepala Keluarga">Kepala Keluarga</option>
-                            <option value="Istri">Istri</option>
-                            <option value="Anak">Anak</option>
-                            <option value="Orang Tua">Orang Tua</option>
-                            <option value="Lainnya">Lainnya</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" name="tambah_anggota"
-                        class="btn btn-success">Simpan</button>
-                    <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Batal</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->

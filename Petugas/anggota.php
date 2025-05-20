@@ -20,7 +20,7 @@ if ($id_keluarga) {
       <div class="col-lg-12 grid-margin strecth-card">
         <div class="card">
           <div class="card-body">
-            <h3>Data Anggota Keluarga — KK No: <?php echo $no_kartu_keluarga_anggota; ?></h3>
+            <h3>Data Anggota Keluarga | Kartu Keluarga No : <?php echo $no_kartu_keluarga_anggota; ?></h3>
             <p class="card-description">Data Anggota Keluarga yang tercatat di sistem</p>
             <div class="container mt-5">
               <h3>Form tambah data anggota keluarga</h3>
@@ -28,11 +28,11 @@ if ($id_keluarga) {
                 <input type="hidden" name="id_keluarga" value="<?php echo $_GET['id_keluarga'] ?? ''; ?>">
                 <div class="mb-3">
                   <label for="nik" class="form-label">NIK</label>
-                  <input type="text" class="form-control" id="nik" name="nik" required>
+                  <input type="text" class="form-control" id="nik" name="nik" required placeholder="Masukkan NIK Anggota Keluarga Baru">
                 </div>
                 <div class="mb-3">
                   <label for="nama" class="form-label">Nama</label>
-                  <input type="text" class="form-control" id="nama" name="nama" required>
+                  <input type="text" class="form-control" id="nama" name="nama" required placeholder="Masukkan nama lengkap anggota keluarga Baru">
                 </div>
                 <div class="mb-3">
                   <label for="hubungan" class="form-label">Hubungan Keluarga</label>

@@ -15,12 +15,12 @@
             <form action="kelahiran-add.php" method="POST">
               <div class="mb-3">
                 <label for="nik" class="form-label">NIK</label>
-                <input type="text" class="form-control" id="nik" name="nik" required>
+                <input type="text" class="form-control" id="nik" name="nik" required placeholder="Masukkan NIK">
               </div>
 
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="nama" name="nama" required>
+                <input type="text" class="form-control" id="nama" name="nama" required placeholder="Masukkan nama lengkap">
               </div>
 
               <div class="mb-3">
@@ -44,21 +44,21 @@
 
               <div class="mb-3">
                 <label for="nama_ayah" class="form-label">Nama Ayah</label>
-                <input type="text" class="form-control" id="nama_ayah" name="nama_ayah" required>
+                <input type="text" class="form-control" id="nama_ayah" name="nama_ayah" required placeholder="Masukkan nama lengkap ayah">
               </div>
 
               <div class="mb-3">
                 <label for="nama_ibu" class="form-label">Nama Ibu</label>
-                <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" required>
+                <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" required placeholder="Masukkan nama lengkap ibu">
               </div>
               <div class="mb-3">
                 <label for="rt" class="form-label">RT</label>
-                <input type="text" class="form-control" id="rt" name="rt" required>
+                <input type="text" class="form-control" id="rt" name="rt" required placeholder="Masukkan RT">
               </div>
 
               <div class="mb-3">
                 <label for="rw" class="form-label">RW</label>
-                <input type="text" class="form-control" id="rw" name="rw" required>
+                <input type="text" class="form-control" id="rw" name="rw" required placeholder="Masukkan RW">
               </div>
 
 

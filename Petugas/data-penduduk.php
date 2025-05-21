@@ -2,8 +2,31 @@
 <?php include "../service/modal.php" ?>
 <?php include "../service/crud-query.php" ?>
 
+
 <div class="main-panel">
   <div class="content-wrapper">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 grid-margin stretch-card">
+        <div class="card card-rounded card-bg-1">
+          <div class="card-body">
+            <h4 class="card-title card-title-dash"><?php echo strtoupper("mencatat data penduduk / kelahiran") ?></h4>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+            </div>
+            <p class="text-muted mb-0"><?php echo ucwords("siklus penduduk -> kelola kelahiran -> tambah data lahir") ?></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 grid-margin stretch-card">
+        <div class="card card-rounded card-bg-1">
+          <div class="card-body">
+            <h4 class="card-title card-title-dash"><?php echo strtoupper("mencatat data penduduk / kelahiran") ?></h4>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+            </div>
+            <p class="text-muted mb-0"><?php echo ucwords("siklus penduduk -> kelola kelahiran -> tambah data lahir") ?></p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
@@ -29,6 +52,7 @@
                     <th>Pekerjaan</th>
                     <th>No Handphone</th>
                     <th>Tanggal Input</th>
+                    <th>Status Penduduk</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -55,8 +79,13 @@
                       <td><?= $baris['pekerjaan'] ?></td>
                       <td><?= $baris['no_hp'] ?></td>
                       <td><?= $baris['tanggal_input'] ?></td>
+                      <td><?= $baris['status_penduduk'] ?></td>
                       <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal<?= $baris['nik'] ?>" class="btn btn-warning">Update</a>
                         <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $baris['nik'] ?>" class="btn btn-danger">Hapus</a>
+                        <a href="cetak-ktp.php?nik=<?php echo $penduduk['nik']; ?>" class="btn btn-primary m-2" target="_blank">
+                          <?php echo ucwords("Cetak KTP"); ?>
+                        </a>
+
                       </td>
                     </tr>
                   <?php

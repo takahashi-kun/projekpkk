@@ -1,16 +1,19 @@
-<?php 
+<?php
 include '../service/config.php';
 
 session_start(); // memulai session
 //cek apakah session petugas ada
 if (isset($_SESSION['id_petugas'])) {
   $id_petugas = $_SESSION['id_petugas'];
-  $query = "SELECT * FROM tb_petugas WHERE id_petugas = ?";
-  $stmt = mysqli_prepare($conn, $query);
-  mysqli_stmt_bind_param($stmt, 'i', $id_petugas);
-  mysqli_stmt_execute($stmt);
-  $result = mysqli_stmt_get_result($stmt);
-  $nama = mysqli_fetch_assoc($result);
+
+  $result = mysqli_query($conn, "SELECT * FROM tb_petugas WHERE id_petugas = '$id_petugas'");
+
+  if ($result && mysqli_num_rows($result) > 0) {
+    $nama = mysqli_fetch_assoc($result);
+  } else {
+    echo "<div class='alert alert-danger'>Petugas tidak ditemukan.</div>";
+    exit();
+  }
 } else {
   header("location:../index.php");
   exit();
@@ -48,22 +51,21 @@ if (isset($_SESSION['id_petugas'])) {
 
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css">
 
+
   <style>
+    .dt-custom-search-end {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 15px;
+    }
 
-.dt-custom-search-end {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 15px;
-}
-
-.dt-custom-search-end input {
-  width: 250px;
-  padding: 6px 12px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-</style>
+    .dt-custom-search-end input {
+      width: 250px;
+      padding: 6px 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
 
 <body>
@@ -108,7 +110,7 @@ if (isset($_SESSION['id_petugas'])) {
                 <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
                 <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
               </div>
-              <a class="dropdown-item" href="../service/logout.php" ><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
+              <a class="dropdown-item" href="../service/logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
             </div>
           </li>
         </ul>
@@ -120,115 +122,134 @@ if (isset($_SESSION['id_petugas'])) {
   </div>
 
 
-    <div class="container-fluid page-body-wrapper">
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="dashboard-p.php">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-          <li class="nav-item nav-category">Penduduk</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#keloladata" aria-expanded="false"
-              aria-controls="keloladata">
-              <i class="menu-icon mdi mdi-card-text-outline"></i>
-              <span class="menu-title">Kelola Data</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="keloladata">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="data-penduduk.php">Data Penduduk </a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item nav-category">Kartu keluarga</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#kkkeloladatakk" aria-expanded="false"
-              aria-controls="kkkeloladatakk">
-              <i class="menu-icon mdi mdi-card-text-outline"></i>
-              <span class="menu-title">Kelola Data</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="kkkeloladatakk">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="data-kk.php">Data Kartu Keluarga</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="create-kk.php">Buat kartu keluarga Baru</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="anggota.php">Tambah Anggota keluarga</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item nav-category">Siklus Penduduk</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#sirkulasipenduduklahir" aria-expanded="false" aria-controls="sirkulasipenduduklahir">
-              <i class="menu-icon mdi mdi-card-text-outline"></i>
-              <span class="menu-title">Kelola Kelahiran</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="sirkulasipenduduklahir">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="kelahiran.php">Data Kelahiran</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="kelahiran-add.php">Tambah Data Lahir</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#sirkulasipendudukmati" aria-expanded="false" aria-controls="sirkulasipendudukmati">
-              <i class="menu-icon mdi mdi-card-text-outline"></i>
-              <span class="menu-title">Kelola Kematian</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="sirkulasipendudukmati">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="kematian.php">Data Kematian</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="kematian-add.php">Catat Kematian</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="laporan.php">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">laporan</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
 
-       <!-- log out modal -->
-        <!-- <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" style="display: none; padding-right: 17px;" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="logoutModalLabel">Log out ?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are readyto end your current session.</div>
-                <div class="modal-footer">
-                <form action="../index.php" method="post">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button type="submit" name="logout" id="logout" value="logout" class="btn btn-danger"><i class="fa fa-sign-out
-                    alt"></i> Logout</button>
-                </form>
-                </div>
-            </div>
-            </div>
-        </div> -->
+  <div class="container-fluid page-body-wrapper">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard-p.php">
+            <i class="mdi mdi-grid-large menu-icon"></i>
+            <span class="menu-title">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item nav-category">Penduduk</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#keloladata" aria-expanded="false"
+            aria-controls="keloladata">
+            <i class="menu-icon mdi mdi-card-text-outline"></i>
+            <span class="menu-title">Kelola Data</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="keloladata">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" href="data-penduduk.php">Data Penduduk </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Migrasi Penduduk</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#migrasi" aria-expanded="false"
+            aria-controls="migrasi">
+            <i class="menu-icon mdi mdi-card-text-outline"></i>
+            <span class="menu-title">Kelola Data</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="migrasi">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" href="migrasi-masuk.php">Data Penduduk Masuk </a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="migrasi-keluar.php">Data Penduduk Keluar</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Kartu keluarga</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#kkkeloladatakk" aria-expanded="false"
+            aria-controls="kkkeloladatakk">
+            <i class="menu-icon mdi mdi-card-text-outline"></i>
+            <span class="menu-title">Kelola Data</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="kkkeloladatakk">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item">
+                <a class="nav-link" href="data-kk.php">Data Kartu Keluarga</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="create-kk.php">Buat kartu keluarga Baru</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="anggota.php">Tambah Anggota keluarga</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Siklus Penduduk</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#sirkulasipenduduklahir" aria-expanded="false" aria-controls="sirkulasipenduduklahir">
+            <i class="menu-icon mdi mdi-card-text-outline"></i>
+            <span class="menu-title">Kelola Kelahiran</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="sirkulasipenduduklahir">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item">
+                <a class="nav-link" href="kelahiran.php">Data Kelahiran</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="kelahiran-add.php">Tambah Data Lahir</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#sirkulasipendudukmati" aria-expanded="false" aria-controls="sirkulasipendudukmati">
+            <i class="menu-icon mdi mdi-card-text-outline"></i>
+            <span class="menu-title">Kelola Kematian</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="sirkulasipendudukmati">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item">
+                <a class="nav-link" href="kematian.php">Data Kematian</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="kematian-add.php">Catat Kematian</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="laporan.php">
+            <i class="mdi mdi-grid-large menu-icon"></i>
+            <span class="menu-title">laporan</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" style="display: none; padding-right: 
+17px;" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="logoutModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <form action="" method="post">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <button type="submit" name="logout" id="logout" value="logout" class="btn btn-danger"><i class="fa fa-sign-out
+alt"></i> Logout</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>

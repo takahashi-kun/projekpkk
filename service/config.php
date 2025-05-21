@@ -27,7 +27,8 @@ $dataPenduduk = $conn->query("
         status_hidup,
         pekerjaan,
         no_hp,
-        tanggal_input
+        tanggal_input,
+        status_penduduk
     FROM 
         tpenduduk
 ");

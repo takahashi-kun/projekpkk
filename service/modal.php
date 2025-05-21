@@ -256,8 +256,7 @@ foreach ($keluargaupdate as $row): ?>
 <?php endforeach; ?>
 
 <!-- Modal Delete Kartu Keluarga -->
-<?php
-foreach ($keluargadelete as $row): ?>
+<?php foreach ($keluargadelete as $row): ?>
     <div class="modal fade" id="deleteKKModal<?php echo $row['id_keluarga']; ?>" tabindex="-1"
         aria-labelledby="deleteKKModalLabel<?php echo $row['id_keluarga']; ?>" aria-hidden="true">
         <div class="modal-dialog modal-sm">
@@ -274,16 +273,16 @@ foreach ($keluargadelete as $row): ?>
                 </div>
                 <div class="modal-footer">
                     <form method="POST" action="data-kk.php">
-                        <input type="hidden" name="id_keluarga"
-                            value="<?php echo $row['id_keluarga']; ?>">
+                        <input type="hidden" name="id_keluarga" value="<?php echo $row['id_keluarga']; ?>">
                         <button type="submit" name="delete_kk" class="btn btn-danger">Hapus</button>
                     </form>
-                    <a href="../Petugas/data-kk.php" class="btn btn-danger">Batal</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                 </div>
             </div>
         </div>
     </div>
 <?php endforeach; ?>
+
 
 <!-- modal anggota keluarga -->
 <!-- modal lihat anggota keluarga -->
@@ -309,6 +308,9 @@ foreach ($anggota_data as $id_keluarga => $anggota_list):
                     <a href="../Petugas/anggota.php?id_keluarga=<?php echo $id_keluarga; ?>" class="btn btn-success m-3">
                         <?php echo ucwords("tambah anggota keluarga"); ?>
                     </a>
+                    <a href="../Petugas/cetak-data-kk.php?id_keluarga=<?php echo $id_keluarga; ?>" class="btn btn-success m-3">
+                        <?php echo ucwords("cetak kartu keluarga"); ?>
+                    </a>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -326,6 +328,56 @@ foreach ($anggota_data as $id_keluarga => $anggota_list):
                             <?php
                             $no = 1;
                             foreach ($anggota_list as $anggota):
+                            ?>
+                                <tr>
+                                    <td><?php echo $no++; ?></td>
+                                    <td><?php echo $anggota['nik']; ?></td>
+                                    <td><?php echo $anggota['nama']; ?></td>
+                                    <td><?php echo $anggota['hubungan']; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+<!-- modal anggota keluarga khusus pemerintah -->
+<!-- modal lihat anggota keluarga -->
+<?php
+$anggota_data_pemerintah = [];
+while ($row = $anggotakk->fetch_assoc()) {
+    $anggota_data_pemerintah[$row['id_keluarga']][] = $row;
+}
+foreach ($anggota_data_pemerintah as $id_keluarga => $urutan_anggota):
+?>
+    <!-- Modal lihat anggota keluarga -->
+    <div class="modal fade" id="lihatanggotapemerintahmodal<?php echo $id_keluarga; ?>" tabindex="-1"
+        aria-labelledby="lihatanggotapemerintahmodalLabel<?php echo $row['id_keluarga']; ?>" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lihatanggotapemerintahmodalLabel<?php echo $id_keluarga; ?>">
+                        Anggota Keluarga</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NIK</th>
+                                <th>Nama</th>
+                                <th>Hubungan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            foreach ($urutan_anggota as $anggota):
                             ?>
                                 <tr>
                                     <td><?php echo $no++; ?></td>

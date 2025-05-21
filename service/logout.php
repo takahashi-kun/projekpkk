@@ -1,9 +1,13 @@
 <?php
 include 'config.php';
-
-// Logout & hapus session
-    session_destroy();
-    header("Location:../index.php");
-    exit();
-
+ session_start();
+ // Cek session
+ if(!isset($_SESSION["user"])) {
+ header("Location: login.php");
+ }
+ // Logout & hapus session
+ if (isset($_POST['logout'])) {
+ session_unset();
+ header("Location: login.php");
+ }
     ?>

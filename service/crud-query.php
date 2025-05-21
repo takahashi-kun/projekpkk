@@ -15,96 +15,9 @@ if (isset($_POST['update'])) {
     $pekerjaan = $_POST['pekerjaan'] ?? null;
     $no_hp = $_POST['no_hp'] ?? null;
     $id_lahir = $_POST['id_lahir'] ?? null;
-
-    //logika mencari alamat
-    //query untuk mencari alamat berdasarkan id_keluarga
-    //dari tabel keluarga untuk tabel penduduk
-    // Inisialisasi alamat
-
-    // $alamat = null;
-    // if (!empty($no_kartu_keluarga)) {
-    //     $query_alamat = "SELECT alamat FROM tkeluarga WHERE id_keluarga = '$no_kartu_keluarga'";
-    //     $result_alamat = mysqli_query($conn, $query_alamat);
-    //     if ($result_alamat && mysqli_num_rows($result_alamat) > 0) {
-    //         $data_alamat = mysqli_fetch_assoc($result_alamat);
-    //         $alamat = $data_alamat['alamat'];
-    //         $no_kartu_keluarga = $data_keluarga['no_kartu_keluarga'];
-    //     } else {
-    //         $alamat = 'Alamat tidak ditemukan';
-    //     }
-    // }
-
-    //logika mencari tempat lahir
-    //query untuk mencari tempat_lahir berdasarkan id_lahir
-    //dari tabel kelahiran untuk tabel penduduk
-
-    // $tempat_lahir = null;
-    // if (!empty($id_lahir)) {
-    //     $query_tempat_lahir = "SELECT tempat_lahir FROM tb_lahir WHERE id_lahir = '$tempat_lahir'";
-    //     $result_tempat_lahir = mysqli_query($conn, $query_tempat_lahir);
-    //     if ($result_tempat_lahir && mysqli_num_rows($result_tempat_lahir) > 0) {
-    //         $data_tempat_lahir = mysqli_fetch_assoc($result_tempat_lahir);
-    //         $tempat_lahir = $data_tempat_lahir['tempat_lahir'];
-    //     } else {
-    //         echo "<script>alert('Tempat lahir valid.'); window.location.href='kelahiran.php';</script>";
-    //         exit;
-    //     }
-    // }
-
-    //logika mencari tanggal lahir
-    //query untuk mencari tanggal_lahir berdasarkan id_lahir
-    //dari tabel kelahiran untuk tabel penduduk
-
-    // $tanggal_lahir = null;
-    // if (!empty($id_lahir)) {
-    //     $query_tanggal_lahir = "SELECT tanggal_lahir FROM tb_lahir WHERE id_lahir = '$tanggal_lahir'";
-    //     $result_tanggal_lahir = mysqli_query($conn, $query_tanggal_lahir);
-    //     if ($result_tanggal_lahir && mysqli_num_rows($result_tanggal_lahir) > 0) {
-    //         $data_tanggal_lahir = mysqli_fetch_assoc($result_tanggal_lahir);
-    //         $tanggal_lahir = $data_tanggal_lahir['tanggal_lahir'];
-    //     } else {
-    //         echo "<script>alert('Tanggal lahir tidak valid.'); window.location.href='kelahiran.php';</script>";
-    //         exit;
-    //     }
-    // }
-
-    //logika mencari jenis kelamin
-    //query untuk mencari jenis_kelamin berdasarkan id_lahir
-    //dari tabel kelahiran untuk tabel penduduk
-
-    // $jenis_kelamin = null;
-    // if (!empty($id_lahir)) {
-    //     $query_jenis_kelamin = "SELECT jenis_kelamin FROM tb_lahir WHERE id_lahir = '$jenis_kelamin'";
-    //     $result_jenis_kelamin = mysqli_query($conn, $query_jenis_kelamin);
-    //     if ($result_jenis_kelamin && mysqli_num_rows($result_jenis_kelamin) > 0) {
-    //         $data_jenis_kelamin = mysqli_fetch_assoc($result_jenis_kelamin);
-    //         $jenis_kelamin = $data_jenis_kelamin['jenis_kelamin'];
-    //     } else {
-    //         echo "<script>alert('Tanggal lahir tidak valid.'); window.location.href='kelahiran.php';</script>";
-    //         exit;
-    //     }
-    // }
-
-    // Ambil no_kartu_keluarga dari tpenduduk
-    // $query_kk = "SELECT no_kartu_keluarga FROM tpenduduk WHERE nik = '$nik'";
-    // $result_kk = mysqli_query($conn, $query_kk);
-
-    // if ($result_kk && mysqli_num_rows($result_kk) > 0) {
-    //     $data_kk = mysqli_fetch_assoc($result_kk);
-    //     $no_kartu_keluarga = $data_kk['no_kartu_keluarga'];
-
-    //     // Ambil alamat dari tkeluarga berdasarkan no_kartu_keluarga
-    //     $query_alamat = "SELECT alamat FROM tkeluarga WHERE id_keluarga = '$no_kartu_keluarga'";
-    //     $result_alamat = mysqli_query($conn, $query_alamat);
-    //     $alamat = null;
-
-    //     if ($result_alamat && mysqli_num_rows($result_alamat) > 0) {
-    //         $data_alamat = mysqli_fetch_assoc($result_alamat);
-    //         $alamat = $data_alamat['alamat'];
-    //     } else {
-    //         $alamat = 'Alamat tidak ditemukan';
-    //     }
-
+    $rt = $_POST['rt'] ?? null;
+    $rw = $_POST['rw'] ?? null;
+    $status_penduduk = $_POST['status_penduduk'] ?? null;
 
     $sql = "
         UPDATE 
@@ -115,15 +28,17 @@ if (isset($_POST['update'])) {
             agama='$agama', 
             status_perkawinan='$status_perkawinan', 
             pekerjaan='$pekerjaan', 
-            no_hp='$no_hp' 
+            no_hp='$no_hp',
+            rt='$rt',
+            rw='$rw'
         WHERE 
             nik='$nik'";
 
     $hasil = mysqli_query($conn, $sql);
     if ($hasil) {
-        echo "<div class='alert alert-success'>Data berhasil diperbarui.</div>";
+        echo "<script>alert('Data berhasil diperbarui.'); window.location.href='data-penduduk.php';</script>";
     } else {
-        echo "<div class='alert alert-danger'>Data gagal diperbarui.</div>";
+        echo "<script>alert('Data gagal diperbarui.'); window.location.href='data-penduduk.php';</script>";
     }
 }
 
@@ -138,6 +53,84 @@ if (isset($_POST['delete'])) {
         echo "<div class='alert alert-danger'>Data gagal dihapus.</div>";
     }
 }
+
+//logika migrasi keluar penduduk
+//insert data migrasi keluar
+
+
+if (isset($_POST['submit_migrasi'])) {
+    $nik = $_POST['nik'];
+    $tanggal_pindah = $_POST['tanggal_pindah'];
+    $alasan_pindah = $_POST['alasan_pindah'];
+    $alamat_tujuan = $_POST['alamat_tujuan'];
+    $id_wilayah_tujuan = $_POST['id_wilayah_tujuan'];
+    $id_petugas = $_SESSION['id_petugas'];
+
+    // Cek apakah NIK ada di tb_lahir
+    $cek_lahir = mysqli_query($conn, "SELECT * FROM tb_lahir WHERE nik = '$nik'");
+    if (mysqli_num_rows($cek_lahir) == 0) {
+        echo "<div class='alert alert-danger'>NIK tidak ditemukan di data kelahiran.</div>";
+        exit;
+    }
+
+    // Cek apakah NIK ada di tpenduduk
+    $cek_penduduk = mysqli_query($conn, "SELECT * FROM tpenduduk WHERE nik = '$nik'");
+    if (mysqli_num_rows($cek_penduduk) == 0) {
+        echo "<div class='alert alert-danger'>NIK tidak ditemukan di data penduduk.</div>";
+        exit;
+    }
+
+    // Cek apakah NIK sudah pernah migrasi
+    $cek_pindah = mysqli_query($conn, "SELECT * FROM tb_pindah WHERE nik = '$nik'");
+    if (mysqli_num_rows($cek_pindah) > 0) {
+        echo "<div class='alert alert-warning'>NIK ini sudah tercatat melakukan migrasi sebelumnya.</div>";
+        exit;
+    }
+
+    // Ambil data wilayah asal dari penduduk
+    $data_penduduk = mysqli_fetch_assoc($cek_penduduk);
+    $id_wilayah_asal = $data_penduduk['id_wilayah'];
+
+    // Update alamat baru di tpenduduk
+    $update = mysqli_query($conn, "
+        UPDATE tpenduduk SET 
+            alamat = '$alamat_tujuan',
+            id_wilayah = '$id_wilayah_tujuan'
+        WHERE nik = '$nik'
+    ");
+
+    // Masukkan ke tabel tb_pindah
+    $insert = mysqli_query($conn, "
+        INSERT INTO tb_pindah (
+            nik,
+            tanggal_pindah,
+            alasan_pindah,
+            id_wilayah_asal,
+            id_wilayah_tujuan,
+            alamat_tujuan,
+            id_petugas,
+            tanggal_input
+        ) VALUES (
+            '$nik',
+            '$tanggal_pindah',
+            '$alasan_pindah',
+            '$id_wilayah_asal',
+            '$id_wilayah_tujuan',
+            '$alamat_tujuan',
+            '$id_petugas',
+            NOW()
+        )
+    ");
+
+    if ($update && $insert) {
+        echo "<div class='alert alert-success'>Data migrasi keluar berhasil diproses.</div>";
+    } else {
+        echo "<div class='alert alert-danger'>Gagal memproses migrasi keluar.</div>";
+    }
+}
+
+
+
 
 // logika keluarga
 // tambah kartu keluarga 

@@ -3,70 +3,60 @@
 include 'service/config.php';
 session_start();
 
-//validasi input sebelum di proses
+// Validasi input sebelum diproses
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $aliuser = $_POST['username'];
     $alipass = $_POST['password'];
-    
-    //cek apakah username dan password ada di database
-    $aliquery = "SELECT * FROM tb_petugas WHERE username= ?";
-    $aliprepare = mysqli_prepare($conn,$aliquery); // ini persiapan sebelum query di eksekusi
-    mysqli_stmt_bind_param($aliprepare, 's', $aliuser);
-    mysqli_stmt_execute($aliprepare); //meng eksekusi query yang telah di persiapkan sebelumnya
-    $aliresult = mysqli_stmt_get_result($aliprepare);// hasil dari query yang telah di eksekusi
+
+    // Cek apakah username ada di database
+    $aliquery = "SELECT * FROM tb_petugas WHERE username = '$aliuser'";
+    $aliresult = mysqli_query($conn, $aliquery);
 
     if (mysqli_num_rows($aliresult) > 0) {
         $alidata = mysqli_fetch_assoc($aliresult);
 
-        //cek apakah password yang diinputkan sesuai dengan password di database
+        // Cek apakah password sesuai
         if ($alidata['password'] == $alipass) {
-            //set session untuk semua peran
+            // Set session untuk semua peran
             session_regenerate_id(true);
             $_SESSION['id_petugas'] = $alidata['id_petugas'];
             $_SESSION['nama_petugas'] = $alidata['nama_petugas'];
             $_SESSION['username'] = $alidata['username'];
             $_SESSION['hak'] = $alidata['hak'];
 
-            //catat aktivitas login
-            $aliid_petugas = $alidata['id_petugas'];// id user tabel tb_petugas
-            $aliaksi = "Login sebagai " . $alidata['hak']; // aksi yang dicatat
-            $alitanggal = date('Y-m-d H:i:s');// tanggal dan waktu sekarang
+            // Catat aktivitas login
+            $aliid_petugas = $alidata['id_petugas'];
+            $aliaksi = "Login sebagai " . $alidata['hak'];
+            $alitanggal = date('Y-m-d H:i:s');
 
-            //query untuk mencatat aktivitas login
-            $aliquery = "INSERT INTO tb_aktivitas (id_petugas, aksi, tanggal) VALUES (?,?,?)";
-            $alilogprepare = mysqli_prepare($conn,$aliquery); 
-            if ($alilogprepare) {
-                mysqli_stmt_bind_param($alilogprepare,"iss",$aliid_petugas,$aliaksi,$alitanggal); 
-                mysqli_stmt_execute($alilogprepare);
-            }else {
-                echo "<script>alert(' Aktivitas Gagal di catat!');</script>";
+            $log_query = "INSERT INTO tb_aktivitas (id_petugas, aksi, tanggal) 
+            VALUES ('$aliid_petugas', '$aliaksi', '$alitanggal')";
+            if (!mysqli_query($conn, $log_query)) {
+                echo "<script>alert('Aktivitas gagal dicatat!');</script>";
             }
-            
-            // ini persiapan sebelum query di eksekusi
-            // mengikat $aliuser, $aliaksi, dan $alitanggal ke parameter ? di dalam query, dengan tipe data masing-masing sesuai yang telah didefinisikan dalam string "iss".
 
-            //cek hak akses dan arahkan ke halaman yang sesuai
-            if ($alidata ['hak'] == 'admin') {
-                header("Location: Admin/log_aktivitas.php");// mengrahkan ke halaman admin
-            }elseif($alidata['hak'] == 'pemerintah'){
-                header("location: pemerintahan/index.php");// mengrahkan ke halaman pemerintah
-            }elseif($alidata['hak'] == 'petugas'){
-                header("location: Petugas/dashboard-p.php");//menhgrahkan ke halaman petugas
-            }else {
-                echo "<script>alert('hak akses tidak dikenali!');</script>";
+            // Redirect sesuai hak akses
+            if ($alidata['hak'] == 'pemerintah') {
+                header("Location: Pemerintah/dashboard.php");
+            }
+            elseif ($alidata['hak'] == 'petugas') {
+                header("Location: Petugas/dashboard-p.php");
+            } else {
+                echo "<script>alert('Hak akses tidak dikenali!');</script>";
                 echo "<script>window.location.href='index.php';</script>";
             }
-            exit(); //tambahkan ini untuk menghentikan eksekusi script setelah redirect
-        }else {
-            echo "<script>alert('akun tidak ditemukan!');</script>";
-            echo "<script>window.location.href='index.php';</script>";// untuk mengarahkan kembali ke halaman login jika password tidak sesuai
+            exit();
+        } else {
+            echo "<script>alert('Password salah!');</script>";
+            echo "<script>window.location.href='index.php';</script>";
         }
-    }else {
-        echo "<script>alert('akun tidak ditemukan!');</script>";
-        echo "<script>window.location.href='index.php';</script>"; // untuk mengarahkan kembali ke halaman login jika username tidak sesuai
+    } else {
+        echo "<script>alert('Akun tidak ditemukan!');</script>";
+        echo "<script>window.location.href='index.php';</script>";
     }
-}else {
-    echo "<script>alert('silahkan masukkan username dan password anda!');</script>";
-    echo "<script>window.location.href='index.php';</script>";// untuk mengarahkan kembali ke halaman login jika username dan password tidak diisi
+} else {
+    echo "<script>alert('Silakan masukkan username dan password Anda!');</script>";
+    echo "<script>window.location.href='index.php';</script>";
 }
+
 ?>

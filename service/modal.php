@@ -111,11 +111,11 @@ foreach ($dataPenduduk as $baris2) {
 <?php } ?>
 
 <?php
-// penduduk delete modal
+// kk delete modal
 foreach ($deletePenduduk as $row) {
     $nik = $row['nik'];
 ?>
-    <div class="modal fade" id="deleteModal<?= $nik ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal<?= $nik ?>" tabindex="-1" aria-labelledby="exampleModalLabel<?= $nik ?>" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -388,6 +388,75 @@ foreach ($anggota_data_pemerintah as $id_keluarga => $urutan_anggota):
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+<!-- modal update pendiidkan -->
+ 
+<div class="modal fade" id="updatePendidikanModal<?php echo $row['id_pendidikan']; ?>" tabindex="-1" aria-labelledby="updatePendidikanModalLabel<?php echo $row['id_pendidikan']; ?>" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="POST" action="../Petugas/data-pendidikan.php">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updatePendidikanModalLabel<?php echo $row['id_pendidikan']; ?>">Update Data Pendidikan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id_pendidikan" value="<?php echo $row['id_pendidikan']; ?>">
+                    <div class="form-group">
+                        <label for="nik">NIK</label>
+                        <input type="text" name="nik" class="form-control" value="<?php echo $row['nik']; ?>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nama_institusi">Nama Institusi</label>
+                        <input type="text" name="nama_institusi" class="form-control" value="<?php echo $row['nama_institusi']; ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tingkat_pendidikan">Tingkat Pendidikan</label>
+                        <select name="tingkat_pendidikan" class="form-control" required>
+                            <option value="" selected disabled>-- Pilih Tingkat Pendidikan --</option>
+                            <option value="SD" <?php echo ($row['tingkat_pendidikan'] == 'SD') ? 'selected' : ''; ?>>SD</option>
+                            <option value="SMP" <?php echo ($row['tingkat_pendidikan'] == 'SMP') ? 'selected' : ''; ?>>SMP</option>
+                            <option value="SMA" <?php echo ($row['tingkat_pendidikan'] == 'SMA') ? 'selected' : ''; ?>>SMA</option>
+                            <option value="D3" <?php echo ($row['tingkat_pendidikan'] == 'D3') ? 'selected' : ''; ?>>D3</option>
+                            <option value="S1" <?php echo ($row['tingkat_pendidikan'] == 'S1') ? 'selected' : ''; ?>>S1</option>
+                            <option value="S2" <?php echo ($row['tingkat_pendidikan'] == 'S2') ? 'selected' : ''; ?>>S2</option>
+                            <option value="S3" <?php echo ($row['tingkat_pendidikan'] == 'S3') ? 'selected' : ''; ?>>S3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tahun_lulus">Tahun Lulus</label>
+                        <input type="date" name="tahun_lulus" class="form-control" value="<?php echo $row['tahun_lulus']; ?>" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="update_pendidikan" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>  
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- modal delete pendiidkan -->
+<?php foreach ($pendidikan as $row): ?>
+    <div class="modal fade" id="deletePendidikanModal<?php echo $row['id_pendidikan']; ?>" tabindex="-1" aria-labelledby="deletePendidikanModalLabel<?php echo $row['id_pendidikan']; ?>" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deletePendidikanModalLabel<?php echo $row['id_pendidikan']; ?>">Hapus Data Pendidikan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="../Petugas/data-pendidikan.php">
+                        <input type="hidden" name="id_pendidikan" value="<?php echo $row['id_pendidikan']; ?>">
+                        <p>Apakah Anda yakin ingin menghapus data pendidikan ini?</p>
+                        <p><strong><?php echo $row['nama_institusi']; ?></strong></p>
+                        <button type="submit" name="delete_pendidikan" class="btn btn-danger">Hapus</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </form>
                 </div>
             </div>
         </div>

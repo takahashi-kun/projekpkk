@@ -105,66 +105,68 @@ $data = $conn->query("
         tkeluarga
 ");
 
+$pendidikan = mysqli_query($conn, "SELECT * FROM tpendidikan");
+
 //cetak data kartu keluarga
-$cetak_kk = $conn->query("
-    SELECT 
-        tpenduduk.nama_lengkap AS nama,
-        tb_lahir.nik,
-        tb_lahir.jenis_kelamin, 
-        tb_lahir.tempat_lahir, 
-        tb_lahir.tanggal_lahir, 
-        tkeluarga.alamat, 
-        tpenduduk.agama, 
-        tpendidikan.tingkat_pendidikan,
-        tpenduduk.pekerjaan,
-        tpenduduk.status_perkawinan, 
-        tanggotakeluarga.hubungan, 
-        tb_lahir.nama_ayah,
-        tb_lahir.nama_ibu,
-        tb_provinsi.nama_provinsi AS provinsi, 
-        tb_kabupaten.nama_kabupaten AS kabupaten, 
-        tb_kecamatan.nama_kecamatan AS kecamatan, 
-        tb_kelurahan.nama_kelurahan AS kelurahan
-    FROM 
-        tpenduduk 
-    INNER JOIN
-        tkeluarga 
-    ON 
-        tpenduduk.nik = tkeluarga.nik
-    INNER JOIN 
-        tanggotakeluarga 
-    ON 
-        tpenduduk.nik = tanggotakeluarga.nik
-    INNER JOIN 
-        tb_lahir 
-    ON
-        tpenduduk.nik = tb_lahir.nik
-    INNER JOIN 
-        twafat 
-    ON 
-        tpenduduk.nik = twafat.nik
-    INNER JOIN 
-        twilayah 
-    ON 
-        tpenduduk.id_wilayah = twilayah.id_wilayah
-    INNER JOIN 
-        tpendidikan 
-    ON 
-        tpenduduk.nik = tpendidikan.nik
-    INNER JOIN 
-        tb_provinsi 
-    ON 
-        twilayah.id_provinsi = tb_provinsi.id_provinsi
-    INNER JOIN 
-        tb_kabupaten 
-    ON 
-        twilayah.id_kabupaten = tb_kabupaten.id_kabupaten
-    INNER JOIN 
-        tb_kecamatan 
-    ON 
-        twilayah.id_kecamatan = tb_kecamatan.id_kecamatan
-    INNER JOIN 
-        tb_kelurahan 
-    ON 
-        twilayah.id_kelurahan = tb_kelurahan.id_kelurahan;
-");
+// $cetak_kk = $conn->query("
+//     SELECT 
+//         tpenduduk.nama_lengkap AS nama,
+//         tb_lahir.nik,
+//         tb_lahir.jenis_kelamin, 
+//         tb_lahir.tempat_lahir, 
+//         tb_lahir.tanggal_lahir, 
+//         tkeluarga.alamat, 
+//         tpenduduk.agama, 
+//         tpendidikan.tingkat_pendidikan,
+//         tpenduduk.pekerjaan,
+//         tpenduduk.status_perkawinan, 
+//         tanggotakeluarga.hubungan, 
+//         tb_lahir.nama_ayah,
+//         tb_lahir.nama_ibu,
+//         tb_provinsi.nama_provinsi AS provinsi, 
+//         tb_kabupaten.nama_kabupaten AS kabupaten, 
+//         tb_kecamatan.nama_kecamatan AS kecamatan, 
+//         tb_kelurahan.nama_kelurahan AS kelurahan
+//     FROM 
+//         tpenduduk 
+//     INNER JOIN
+//         tkeluarga 
+//     ON 
+//         tpenduduk.nik = tkeluarga.nik
+//     INNER JOIN 
+//         tanggotakeluarga 
+//     ON 
+//         tpenduduk.nik = tanggotakeluarga.nik
+//     INNER JOIN 
+//         tb_lahir 
+//     ON
+//         tpenduduk.nik = tb_lahir.nik
+//     INNER JOIN 
+//         twafat 
+//     ON 
+//         tpenduduk.nik = twafat.nik
+//     INNER JOIN 
+//         twilayah 
+//     ON 
+//         tpenduduk.id_wilayah = twilayah.id_wilayah
+//     INNER JOIN 
+//         tpendidikan 
+//     ON 
+//         tpenduduk.nik = tpendidikan.nik
+//     INNER JOIN 
+//         tb_provinsi 
+//     ON 
+//         twilayah.id_provinsi = tb_provinsi.id_provinsi
+//     INNER JOIN 
+//         tb_kabupaten 
+//     ON 
+//         twilayah.id_kabupaten = tb_kabupaten.id_kabupaten
+//     INNER JOIN 
+//         tb_kecamatan 
+//     ON 
+//         twilayah.id_kecamatan = tb_kecamatan.id_kecamatan
+//     INNER JOIN 
+//         tb_kelurahan 
+//     ON 
+//         twilayah.id_kelurahan = tb_kelurahan.id_kelurahan;
+// ");

@@ -1,6 +1,48 @@
 <?php include "header.php" ?>
 <?php include "../service/modal.php" ?>
 <?php include "../service/crud-query.php" ?>
+
+<?php
+//jumlah kartu keluarga
+$query = "SELECT COUNT(*) AS total_kk FROM tkeluarga";
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+$totalKK = $data['total_kk'];
+
+//jumlah penduduk
+$query = "SELECT COUNT(*) AS total_pdd FROM tpenduduk";
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+$totalpdd = $data['total_pdd'];
+
+//jumlah wafat
+$query = "SELECT COUNT(*) AS total_wafat FROM twafat";
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+$totalwafat = $data['total_wafat'];
+
+//jumlah lahir
+$query = "SELECT COUNT(*) AS total_lahir FROM tb_lahir";
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+$totallahir = $data['total_lahir'];
+
+// jumlah keseluruhan
+$query = "
+    SELECT 
+        (SELECT COUNT(*) FROM tpenduduk) AS total_penduduk,
+        (SELECT COUNT(*) FROM tkeluarga) AS total_keluarga,
+        (SELECT COUNT(*) FROM tb_lahir) AS total_lahir,
+        (SELECT COUNT(*) FROM twafat) AS total_wafat
+";
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+
+// Tambahkan semua nilai
+$total = $data['total_penduduk'] + $data['total_keluarga'] + $data['total_lahir'] + $data['total_wafat'];
+
+
+?>
 <!-- card jumlah Kartu Keluarga -->
 <div class="main-panel">
     <div class="content-wrapper">
@@ -11,7 +53,7 @@
                     <div class="card-body">
                         <h4 class="card-title card-title-dash">Jumlah Kartu Keluarga</h4>
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h2 class="text-info">1.500</h2>
+                            <h2 class="text-info"><?= number_format($totalKK); ?></h2>
                             <i class="mdi mdi-home text-info icon-lg"></i>
                         </div>
                         <h6 class="card-text mb-0">Kartu Keluarga Terdaftar</h6>
@@ -25,7 +67,7 @@
                     <div class="card-body">
                         <h4 class="card-title card-title-dash">Jumlah Penduduk</h4>
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h2 class="text-success">3.000</h2>
+                            <h2 class="text-info"><?= number_format($totalpdd); ?></h2>
                             <i class="mdi mdi-account-multiple text-success icon-lg"></i>
                         </div>
                         <h6 class="card-text mb-0">Penduduk Terdaftar</h6>
@@ -39,7 +81,7 @@
                     <div class="card-body">
                         <h4 class="card-title card-title-dash">Jumlah Kematian</h4>
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h2 class="text-danger">50</h2>
+                            <h2 class="text-info"><?= number_format($totalwafat); ?></h2>
                             <i class="mdi mdi-grave-stone text-danger icon-lg"></i>
                         </div>
                         <h6 class="card-text mb-0">Kematian Terdaftar</h6>
@@ -53,7 +95,7 @@
                     <div class="card-body">
                         <h4 class="card-title card-title-dash">Jumlah Kelahiran</h4>
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h2 class="text-warning">100</h2>
+                            <h2 class="text-info"><?= number_format($totallahir); ?></h2>
                             <i class="mdi mdi-baby-bottle text-warning icon-lg"></i>
                         </div>
                         <h6 class="card-text mb-0">Kelahiran Terdaftar</h6>
@@ -62,6 +104,54 @@
                 </div>
             </div>
         </div>
+
+        <!-- tabel jumlah keseluruhan, keluarga, penduduk, wafat, lahir -->
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Data laporan</h3>
+                        <p class="card-description">Data yang tercatat di sistem</p>
+                        <!-- tombol cetak semua laporan -->
+                        <!-- <a href="cetak-all-data.php" class="btn btn-primary btn-icon-text mb-2 me-2">
+                            <i class="mdi mdi-printer btn-icon-prepend"></i> Cetak Semua Laporan
+                        </a> -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped" id="tabelsearch">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Jumlah keluarga</th>
+                                        <th>jumlah penduduk</th>
+                                        <th>jumlah kematian</th>
+                                        <th>jumlah lahir</th>
+                                        <th>jumlah keseluruhan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $result = $querylahir;
+                                    $no = 1;
+                                    $barislahir = mysqli_num_rows($result);
+                                    foreach ($result as $row) {
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $no++; ?></td>
+                                            <td><?= number_format($totalKK); ?></td>
+                                            <td><?= number_format($totalpdd); ?></td>
+                                            <td><?= number_format($totalwafat); ?></td>
+                                            <td><?= number_format($totallahir); ?></td>
+                                            <td><?= number_format($total); ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- tabel kartu keluarga -->
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">

@@ -26,10 +26,10 @@
           <div class="col-lg-6 d-flex align-items-center justify-content-center">
             <div class="auth-form-transparent text-left p-3">
               <div class="brand-logo">
-                <img src="templates/images/logo.svg" alt="logo">
+                <img src="templates/images/logo-login-removebg-preview.png" alt="logo" style="width: 200px;">
               </div>
-              <h4>Welcome back!</h4>
-              <h6 class="fw-light">Happy to see you again!</h6>
+              <h4>Selamat Datang Kembali</h4>
+              <h6 class="fw-light">Senang Bertemu dengan anda!</h6>
               <form class="pt-3" action="aksi_login.php" method="post">
                 <div class="form-group">
                   <label for="username">Username</label>
@@ -55,9 +55,6 @@
                 </div>
                 <div class="my-3">
                   <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">LOGIN</button>
-                </div>
-                <div class="text-center mt-4 fw-light">
-                  Don't have an account? <a href="register-2.html" class="text-primary">Create</a>
                 </div>
               </form>
             </div>

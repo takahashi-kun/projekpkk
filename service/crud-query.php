@@ -36,9 +36,12 @@ if (isset($_POST['update'])) {
 
     $hasil = mysqli_query($conn, $sql);
     if ($hasil) {
-        echo "<script>alert('Data berhasil diperbarui.'); window.location.href='data-penduduk.php';</script>";
+       echo "<script>alert('Data Penduduk berhasil di update');</script>";
+        echo "<script>window.location.href = 'data-penduduk.php';</script>";
     } else {
         echo "<script>alert('Data gagal diperbarui.'); window.location.href='data-penduduk.php';</script>";
+        echo "<script>alert('Data gagal diperbarui.');</script>";
+        echo "<script>window.location.href = 'data-penduduk.php';</script>";
     }
 }
 
@@ -56,8 +59,6 @@ if (isset($_POST['delete'])) {
 
 //logika migrasi keluar penduduk
 //insert data migrasi keluar
-
-
 if (isset($_POST['submit_migrasi'])) {
     $nik = $_POST['nik'];
     $tanggal_pindah = $_POST['tanggal_pindah'];
@@ -128,9 +129,6 @@ if (isset($_POST['submit_migrasi'])) {
         echo "<div class='alert alert-danger'>Gagal memproses migrasi keluar.</div>";
     }
 }
-
-
-
 
 // logika keluarga
 // tambah kartu keluarga 
@@ -254,7 +252,6 @@ if (isset($_POST['submitanggota'])) {
         echo "<script>alert('NIK tidak ditemukan dalam data kelahiran.');</script>";
     }
 }
-
 
 // update anggota keluarga
 if (isset($_POST['update_anggota'])) {
@@ -401,6 +398,7 @@ if (isset($_POST['submitkematian'])) {
     $query = "INSERT INTO twafat (nik, nama, tempat_wafat, tanggal_wafat, penyebab) VALUES ('$nik', '$nama', '$tempat_wafat', '$tanggal_wafat', '$penyebab')";
     //query untuk update status penduduk
     $query2 = "UPDATE tpenduduk SET status_hidup = 'Mati' WHERE nik = '$nik'";
+    $query3 = "DELETE FROM tpenduduk WHERE nik = '$nik'";
 
     if (mysqli_query($conn, $query)) {
         if (mysqli_query($conn, $query2)) {
@@ -497,5 +495,45 @@ if (!empty($id_lahir)) {
     } else {
         echo "<script>alert('Tanggal lahir tidak valid.'); window.location.href='kelahiran.php';</script>";
         exit;
+    }
+}
+
+//jumlah kartu keluarga
+$query = "SELECT COUNT(*) AS total_kk FROM tkeluarga";
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+$totalKK = $data['total_kk'];
+
+//jumlah penduduk
+$query = "SELECT COUNT(*) AS total_pdd FROM tpenduduk";
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+$totalpdd = $data['total_pdd'];
+
+//jumlah wafat
+$query = "SELECT COUNT(*) AS total_wafat FROM twafat";
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+$totalwafat = $data['total_wafat'];
+
+//jumlah lahir
+$query = "SELECT COUNT(*) AS total_lahir FROM tb_lahir";
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+$totallahir = $data['total_lahir'];
+
+// insert data pendidikan
+if (isset($_POST['submitpendidikan'])) {
+    $nik = $_POST['nik'];
+    $nama_institusi = $_POST['nama_institusi'];
+    $tingkat_pendidikan = $_POST['tingkat_pendidikan'];
+    $tahun_lulus = $_POST['tahun_lulus'];
+
+    $query = "INSERT INTO tpendidikan (nik, nama_institusi, tingkat_pendidikan, tahun_lulus) VALUES ('$nik', '$nama_institusi', '$tingkat_pendidikan', '$tahun_lulus')";
+    if (mysqli_query($conn, $query)) {
+        echo "<script>alert('Data pendidikan berhasil ditambahkan');</script>";
+        echo "<script>window.location.href='pendidikan-add.php';</script>";
+    } else {
+        echo "<script>alert('Data pendidikan gagal ditambahkan');</script>";
     }
 }

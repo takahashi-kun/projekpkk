@@ -80,10 +80,13 @@
                       <td><?= $baris['no_hp'] ?></td>
                       <td><?= $baris['tanggal_input'] ?></td>
                       <td><?= $baris['status_penduduk'] ?></td>
-                      <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal<?= $baris['nik'] ?>" class="btn btn-warning">Update</a>
+                      <td>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#updateModal<?= $baris['nik'] ?>" class="btn btn-warning">Update</a>
+
                         <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $baris['nik'] ?>" class="btn btn-danger">Hapus</a>
+
                         <a href="cetak-ktp.php?nik=<?php echo $penduduk['nik']; ?>" class="btn btn-primary m-2" target="_blank">
-                          <?php echo ucwords("Cetak KTP"); ?>
+                          <?php echo ucwords("cetak ktp"); ?>
                         </a>
 
                       </td>

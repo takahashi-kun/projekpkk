@@ -5,15 +5,29 @@ include '../service/config.php';
 if (isset($_GET['nik'])) {
     $nik = mysqli_real_escape_string($conn, $_GET['nik']);
 
-    $query = "SELECT tpenduduk.*, tb_lahir.nama_ayah, tb_lahir.nama_ibu 
-              FROM tpenduduk
-              LEFT JOIN tb_lahir ON tpenduduk.nik = tb_lahir.nik
-              WHERE tpenduduk.nik = '$nik'";
+    $query = "
+        SELECT tpenduduk.*, tb_lahir.nama_ayah, tb_lahir.nama_ibu,
+               tb_provinsi.nama_provinsi AS provinsi,
+               tb_kabupaten.nama_kabupaten AS kabupaten,
+               tb_kecamatan.nama_kecamatan AS kecamatan,
+               tb_kelurahan.nama_kelurahan AS kelurahan
+        FROM tpenduduk
+        LEFT JOIN tb_lahir ON tpenduduk.nik = tb_lahir.nik
+        LEFT JOIN twilayah ON tpenduduk.id_wilayah = twilayah.id_wilayah
+        LEFT JOIN tb_provinsi ON twilayah.id_provinsi = tb_provinsi.id_provinsi
+        LEFT JOIN tb_kabupaten ON twilayah.id_kabupaten = tb_kabupaten.id_kabupaten
+        LEFT JOIN tb_kecamatan ON twilayah.id_kecamatan = tb_kecamatan.id_kecamatan
+        LEFT JOIN tb_kelurahan ON twilayah.id_kelurahan = tb_kelurahan.id_kelurahan
+        WHERE tpenduduk.nik = '$nik'
+    ";
+    
+
     $result = mysqli_query($conn, $query);
+    
     $data = mysqli_fetch_assoc($result);
 
     if (!$data) {
-        die("Data penduduk tidak ditemukan.");
+        die("Data tidak ditemukan.");
     }
 } else {
     die("NIK tidak ditemukan.");
@@ -91,33 +105,39 @@ if (isset($_GET['nik'])) {
 </head>
 <body>
   <div class="ktp-card">
-    <div class="ktp-header">PROVINSI JAWA BARAT<br>KABUPATEN BANDUNG</div>
-
-    <table class="ktp-table">
-      <tr><td class="label">NIK</td><td>: 3275012309980001</td></tr>
-      <tr><td class="label">Nama</td><td>: RYAN RENALDI</td></tr>
-      <tr><td class="label">Tempat/Tgl Lahir</td><td>: BANDUNG, 23-09-1998</td></tr>
-      <tr><td class="label">Jenis Kelamin</td><td>: LAKI-LAKI</td></tr>
-      <tr><td class="label">Alamat</td><td>: JL. MERPATI NO. 12</td></tr>
-      <tr><td class="label">RT/RW</td><td>: 002/003</td></tr>
-      <tr><td class="label">Kel/Desa</td><td>: SUKAMAJU</td></tr>
-      <tr><td class="label">Kecamatan</td><td>: BOJONGLOA KALER</td></tr>
-      <tr><td class="label">Agama</td><td>: ISLAM</td></tr>
-      <tr><td class="label">Status Perkawinan</td><td>: BELUM KAWIN</td></tr>
-      <tr><td class="label">Pekerjaan</td><td>: MAHASISWA</td></tr>
-      <tr><td class="label">Kewarganegaraan</td><td>: WNI</td></tr>
-      <tr><td class="label">Berlaku Hingga</td><td>: SEUMUR HIDUP</td></tr>
-    </table>
-
-    <div class="ktp-photo">
-      <!-- Tempat foto -->
-    </div>
-
-    <div class="signature">
-      Bandung, 01 Januari 2025<br>
-      Kepala Dinas<br><br><br>
-      <u>Drs. SUHERMAN</u>
-    </div>
+  <div class="ktp-header">
+    PROVINSI <?= strtoupper($data['provinsi']) ?><br>
+    KABUPATEN <?= strtoupper($data['kabupaten']) ?>
   </div>
+
+  <table class="ktp-table">
+    <tr><td class="label">NIK</td><td>: <?= $data['nik'] ?></td></tr>
+    <tr><td class="label">Nama</td><td>: <?= strtoupper($data['nama_lengkap']) ?></td></tr>
+    <tr><td class="label">Tempat/Tgl Lahir</td><td>: <?= strtoupper($data['tempat_lahir']) ?>, <?= date('d-m-Y', strtotime($data['tanggal_lahir'])) ?></td></tr>
+    <tr><td class="label">Jenis Kelamin</td><td>: <?= strtoupper($data['jenis_kelamin']) ?></td></tr>
+    <tr><td class="label">Alamat</td><td>: <?= strtoupper($data['alamat']) ?></td></tr>
+    <tr><td class="label">RT/RW</td><td>: <?= $data['rt'] ?>/<?= $data['rw'] ?></td></tr>
+    <tr><td class="label">Kel/Desa</td><td>: <?= strtoupper($data['kelurahan']) ?></td></tr>
+    <tr><td class="label">Kecamatan</td><td>: <?= strtoupper($data['kecamatan']) ?></td></tr>
+    <tr><td class="label">Agama</td><td>: <?= strtoupper($data['agama']) ?></td></tr>
+    <tr><td class="label">Status Perkawinan</td><td>: <?= strtoupper($data['status_perkawinan']) ?></td></tr>
+    <tr><td class="label">Pekerjaan</td><td>: <?= strtoupper($data['pekerjaan']) ?></td></tr>
+    <tr><td class="label">Kewarganegaraan</td><td>: <?= strtoupper($data['kewarganegaraan'] ?? '-') ?></td></tr>
+    <tr><td class="label">Berlaku Hingga</td><td>: SEUMUR HIDUP</td></tr>
+  </table>
+
+  <div class="ktp-photo">
+    <!-- Foto jika ada -->
+    <?php if (!empty($data['foto'])): ?>
+      <img src="../uploads/foto/<?= $data['foto'] ?>" alt="Foto" style="width:100%; height:100%;">
+    <?php endif; ?>
+  </div>
+
+  <div class="signature">
+    <?= $data['kabupaten'] ?>, <?= date('d-m-Y') ?><br>
+    Kepala Dinas<br><br><br>
+    <u>Drs. SUHERMAN</u>
+  </div>
+</div>
 </body>
 </html>

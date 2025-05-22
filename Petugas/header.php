@@ -80,10 +80,10 @@ if (isset($_SESSION['id_petugas'])) {
         </div>
         <div>
           <a class="navbar-brand brand-logo" href="dashboard-p.php">
-            <img src="../templates/images/logo.svg" alt="logo" />
+            <img src="../templates/images/logo-login-removebg-preview.png" alt="logo" style="height: 80px;" />
           </a>
           <a class="navbar-brand brand-logo-mini" href="dashboard-p.php">
-            <img src="../templates/images/logo-mini.svg" alt="logo" />
+            <img src="../templates/images/logo-login-removebg-preview.png" alt="logo" />
           </a>
         </div>
       </div>
@@ -101,18 +101,14 @@ if (isset($_SESSION['id_petugas'])) {
               <input type="search" class="form-control" placeholder="Search Here" title="Search here">
             </form>
           </li>
-          <li class="nav-item dropdown d-none d-lg-block user-dropdown">
-            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="../templates/images/faces/face8.jpg" alt="Profile image"> </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-              <div class="dropdown-header text-center">
-                <img class="img-md rounded-circle" src="../templates/images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
-                <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
-              </div>
-              <a class="dropdown-item" href="../service/logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
-            </div>
-          </li>
+          <!-- Navbar Dropdown -->
+          <!-- Tombol Logout -->
+          <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+
+
+
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
           <span class="mdi mdi-menu"></span>
@@ -147,7 +143,22 @@ if (isset($_SESSION['id_petugas'])) {
             </ul>
           </div>
         </li>
-        <li class="nav-item nav-category">Migrasi Penduduk</li>
+        <!-- <li class="nav-item nav-category">Pendidikan</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#pendidikan" aria-expanded="false"
+            aria-controls="pendidikan">
+            <i class="menu-icon mdi mdi-card-text-outline"></i>
+            <span class="menu-title">Kelola Pendidikan</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="pendidikan">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" href="pendidikan-add.php">Data Pendidikan </a>
+              </li>
+            </ul>
+          </div>
+        </li> -->
+        <!-- <li class="nav-item nav-category">Migrasi Penduduk</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#migrasi" aria-expanded="false"
             aria-controls="migrasi">
@@ -163,7 +174,7 @@ if (isset($_SESSION['id_petugas'])) {
               </li>
             </ul>
           </div>
-        </li>
+        </li> -->
         <li class="nav-item nav-category">Kartu keluarga</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#kkkeloladatakk" aria-expanded="false"
@@ -221,35 +232,14 @@ if (isset($_SESSION['id_petugas'])) {
             </ul>
           </div>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="laporan.php">
             <i class="mdi mdi-grid-large menu-icon"></i>
             <span class="menu-title">laporan</span>
           </a>
-        </li>
+        </li> -->
       </ul>
     </nav>
 
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" style="display: none; padding-right: 
-17px;" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="logoutModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <form action="" method="post">
-              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-              <button type="submit" name="logout" id="logout" value="logout" class="btn btn-danger"><i class="fa fa-sign-out
-alt"></i> Logout</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>

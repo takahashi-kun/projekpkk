@@ -113,9 +113,9 @@ $total = $data['total_penduduk'] + $data['total_keluarga'] + $data['total_lahir'
                         <h3 class="card-title">Data laporan</h3>
                         <p class="card-description">Data yang tercatat di sistem</p>
                         <!-- tombol cetak semua laporan -->
-                        <!-- <a href="cetak-all-data.php" class="btn btn-primary btn-icon-text mb-2 me-2">
+                        <a href="cetak-all-data.php" class="btn btn-primary btn-icon-text mb-2 me-2">
                             <i class="mdi mdi-printer btn-icon-prepend"></i> Cetak Semua Laporan
-                        </a> -->
+                        </a>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped" id="tabelsearch">
                                 <thead>

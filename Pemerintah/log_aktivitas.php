@@ -7,11 +7,10 @@
             <div class="col-12 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Striped Sortable Table</h4>
-                        <p class="card-description">Add class <code>.table-striped</code> for table</p>
+                        <h4 class="card-title">DATA AKTIVITAS LOGIN</h4>
                         <div class="row">
                             <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                <table id="sortable-table-2" class="table table-striped">
+                                <table id="tabelsearch" class="table table-striped">
                                     <thead class="table-primary">
                                         <tr>
                                             <th>No</th>

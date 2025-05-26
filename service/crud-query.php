@@ -36,7 +36,7 @@ if (isset($_POST['update'])) {
 
     $hasil = mysqli_query($conn, $sql);
     if ($hasil) {
-       echo "<script>alert('Data Penduduk berhasil di update');</script>";
+        echo "<script>alert('Data Penduduk berhasil di update');</script>";
         echo "<script>window.location.href = 'data-penduduk.php';</script>";
     } else {
         echo "<script>alert('Data gagal diperbarui.'); window.location.href='data-penduduk.php';</script>";
@@ -242,6 +242,19 @@ if (isset($_POST['submitanggota'])) {
         // Update id_keluarga di tb_lahir
         $query_update_lahir = "UPDATE tb_lahir SET id_keluarga = '$id_keluarga' WHERE nik = '$nik'";
         mysqli_query($conn, $query_update_lahir);
+
+        if ($insert) {
+            // Catat aksi ke tb_aksi
+            $id_petugas = $_SESSION['id_petugas'];
+            $tanggal = date('Y-m-d');
+            $aksi = "Insert data penduduk NIK: $nik";
+
+            mysqli_query($conn, "INSERT INTO tb_aksi (id_petugas, tindakan, tanggal) VALUES ('$id_petugas', '$aksi', '$tanggal')");
+
+            echo "<div class='alert alert-success'>Data berhasil disimpan dan aksi dicatat.</div>";
+        } else {
+            echo "<div class='alert alert-danger'>Gagal mencatat aksi.</div>";
+        }
 
         if ($insert) {
             echo "<script>alert('Data anggota berhasil disimpan!'); location.href='anggota.php?id_keluarga=$id_keluarga';</script>";
@@ -537,3 +550,6 @@ if (isset($_POST['submitpendidikan'])) {
         echo "<script>alert('Data pendidikan gagal ditambahkan');</script>";
     }
 }
+
+//query catat aksi insert yang dilakukan petugas
+//query catat aksi delete yang dilakukan petugas

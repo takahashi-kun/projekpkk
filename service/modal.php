@@ -1,9 +1,9 @@
 <?php include 'config.php' ?>
 <?php include 'crud-query.php' ?>
 
-<!-- modal penduduk -->
+<!-- Modal penduduk -->
 <?php
-//modal update data penduduk
+//Modal update data penduduk
 foreach ($dataPenduduk as $baris2) {
     $nik = $baris2['nik'];
     $nama_lengkap = $baris2['nama_lengkap'];
@@ -12,7 +12,7 @@ foreach ($dataPenduduk as $baris2) {
     $rt = $baris2['rt'];
     $rw = $baris2['rw'];
 ?>
-    <div class="modal fade" id="updateModal<?= $nik ?>" tabindex="-1" aria-labelledby="exampleModalLabel<?= $nik ?>" aria-hidden="true">
+    <div class="Modal fade" id="updateModal<?= $nik ?>" tabindex="-1" aria-labelledby="exampleModalLabel<?= $nik ?>" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form method="POST" action="../Petugas/data-penduduk.php">
@@ -393,6 +393,8 @@ foreach ($anggota_data_pemerintah as $id_keluarga => $urutan_anggota):
         </div>
     </div>
 <?php endforeach; ?>
+
+
 <!-- modal update pendiidkan -->
  
 <div class="modal fade" id="updatePendidikanModal<?php echo $row['id_pendidikan']; ?>" tabindex="-1" aria-labelledby="updatePendidikanModalLabel<?php echo $row['id_pendidikan']; ?>" aria-hidden="true">

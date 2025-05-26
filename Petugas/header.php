@@ -143,7 +143,7 @@ if (isset($_SESSION['id_petugas'])) {
             </ul>
           </div>
         </li>
-        <!-- <li class="nav-item nav-category">Pendidikan</li>
+        <li class="nav-item nav-category">Pendidikan</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#pendidikan" aria-expanded="false"
             aria-controls="pendidikan">
@@ -157,8 +157,8 @@ if (isset($_SESSION['id_petugas'])) {
               </li>
             </ul>
           </div>
-        </li> -->
-        <!-- <li class="nav-item nav-category">Migrasi Penduduk</li>
+        </li>
+        <li class="nav-item nav-category">Migrasi Penduduk</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#migrasi" aria-expanded="false"
             aria-controls="migrasi">
@@ -174,7 +174,7 @@ if (isset($_SESSION['id_petugas'])) {
               </li>
             </ul>
           </div>
-        </li> -->
+        </li>
         <li class="nav-item nav-category">Kartu keluarga</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#kkkeloladatakk" aria-expanded="false"

@@ -66,8 +66,6 @@ include '../service/crud-query.php';
     </div>
     <!-- end card jumlah Kartu Keluarga -->
 
-    <!-- penjelasan alur tambah data penduduk -->
-    <!-- No 1 -->
     <div class="row">
       <div class="col-lg-3 col-md-6 grid-margin stretch-card">
         <div class="card card-rounded card-bg-1">

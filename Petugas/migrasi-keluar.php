@@ -36,16 +36,7 @@
 
                                 <div class="mb-3">
                                     <label for="id_wilayah_tujuan" class="form-label">Wilayah Tujuan</label>
-                                    <select class="form-select" name="id_wilayah_tujuan" id="id_wilayah_tujuan" required>
-                                        <option value="">-- Pilih Wilayah Tujuan --</option>
-                                        <?php
-                                        // Ambil data wilayah dari database
-                                        $query_wilayah = mysqli_query($conn, "SELECT * FROM twilayah ORDER BY nama_wilayah ASC");
-                                        while ($wilayah = mysqli_fetch_assoc($query_wilayah)) {
-                                            echo "<option value='" . $wilayah['id_wilayah'] . "'>" . $wilayah['nama_wilayah'] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
+                                    <input type="text" class="form-control" id="id_wilayah_tujuan" name="id_wilayah_tujuan" required>
                                 </div>
 
                                 <button type="submit" name="submit_migrasi" class="btn btn-primary">Proses Migrasi Keluar</button>
